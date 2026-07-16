@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8" />
+  <title>Редактор схемы с кнопками</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <div class="app">
+    <aside class="sidebar">
+      <p class="support-note">
+        Техподдержка —
+        <a
+          class="support-link"
+          href="https://band.wb.ru/central-federal-district-south-loss-analysis/messages/@myasnikov.igor2"
+          target="_blank"
+          rel="noopener noreferrer"
+        >band @myasnikov.igor2</a>
+      </p>
+      <h1 class="app-title">Редактор схемы</h1>
+      <p class="hint">
+        Колесико — масштаб, ЛКМ — перемещение.<br />
+        Режим «добавить кнопку» — клик по схеме.
+      </p>
+
+      <section class="panel">
+        <h2>Фон</h2>
+        <label class="file-label">
+          <span>Загрузить фон (PNG/JPG)</span>
+          <input type="file" id="backgroundInput" accept="image/*" />
+        </label>
+        <button id="resetViewBtn" class="btn btn-secondary">Сбросить масштаб/позицию</button>
+        <p class="small">
+          Размер: <span id="bgSize">—</span><br />
+          Масштаб: <span id="zoomLevel">100%</span>
+        </p>
+      </section>
+
+      <section class="panel">
+        <h2>Кнопки</h2>
+        <button id="addButtonModeBtn" class="btn btn-primary">Режим: добавить кнопку</button>
+        <p class="small">
+          В режиме добавления — клик по схеме. В обычном — переход по ссылке.
+        </p>
+      </section>
+
+      <section class="panel">
+        <h2>Просмотр</h2>
+        <div class="datetime-panel">
+          <label class="date-label" for="playerDateInput">
+            <span id="playerDateModeLabel">Сейчас</span>
+            <input type="date" id="playerDateInput" />
+          </label>
+          <label class="date-label" for="playerTimeInput">
+            <span>Время</span>
+            <input
+              type="text"
+              id="playerTimeInput"
+              class="time-text-input"
+              value="00:00:00"
+              placeholder="00:00:00"
+              inputmode="numeric"
+              autocomplete="off"
+              spellcheck="false"
+              disabled
+            />
+          </label>
+          <div class="datetime-actions">
+            <button type="button" id="resetPlayerDateBtn" class="btn btn-secondary btn-compact">
+              Сейчас
+            </button>
+            <button type="button" id="resetPlayerTimeBtn" class="btn btn-secondary btn-compact">
+              00:00
+            </button>
+          </div>
+        </div>
+        <p class="small">
+          Дата и время для архива. Можно вставить из буфера (14:30:00, 14-30).
+        </p>
+      </section>
+
+      <section class="panel">
+        <h2>Поиск</h2>
+        <div class="search-row">
+          <input
+            type="search"
+            id="markerSearchInput"
+            class="search-input"
+            placeholder="ID или ссылка"
+            autocomplete="off"
+          />
+          <button type="button" id="markerSearchBtn" class="btn btn-primary btn-compact">
+            Найти
+          </button>
+        </div>
+        <p id="markerSearchStatus" class="search-status"></p>
+        <p class="small">
+          ID камеры или ссылка …/player/464536 — точка подсветится.
+        </p>
+      </section>
+
+      <section class="panel">
+        <h2>Конфиг</h2>
+        <button id="saveConfigBtn" class="btn btn-primary">Сохранить конфиг</button>
+        <button id="exportReleaseBtn" class="btn btn-secondary" style="margin-top: 6px; width: 100%;">
+          Сохранить релиз (HTML)
+        </button>
+        <label class="file-label" style="margin-top: 6px;">
+          <span>Загрузить конфиг (.json)</span>
+          <input type="file" id="configInput" accept="application/json" />
+        </label>
+        <p class="small">
+          JSON — фон и точки. Релиз — один HTML только для просмотра.
+        </p>
+      </section>
+    </aside>
+
+    <main class="workspace">
+      <div id="viewport" class="viewport">
+        <div id="canvas" class="canvas">
+          <div class="placeholder">
+            Загрузите фон схемы, чтобы начать.
+          </div>
+        </div>
+      </div>
+    </main>
+  </div>
+
+  <div id="markerContextMenu" class="context-menu">
+    <button class="context-menu-item" data-action="edit-link">Изменить ссылку</button>
+    <button class="context-menu-item" data-action="edit-direction">Изменить наклон</button>
+    <button class="context-menu-item context-menu-item-danger" data-action="delete">Удалить точку</button>
+  </div>
+
+  <script src="app.js"></script>
+</body>
+</html>
